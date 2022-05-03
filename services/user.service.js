@@ -5,13 +5,10 @@ class UserService {
 
   constructor() { }
 
-  async create(data) {
-    const newUser = await models.User.create(data);
-    return newUser;
-  }
-
   async find() {
-    const rta = await models.User.findAll();
+    const rta = await models.User.findAll({
+      include: ["customer"]
+    });
     return rta;
     // const client = await getConnection();
     // const rta = await client.query('SELECT * FROM tasks');
@@ -24,6 +21,12 @@ class UserService {
       throw boom.notFound('user not found');
     }
     return user;
+  }
+
+
+  async create(data) {
+    const newUser = await models.User.create(data);
+    return newUser;
   }
 
   async update(id, changes) {
