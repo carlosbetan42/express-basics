@@ -20,9 +20,7 @@ function ormErrorHandler(err, req, res, next) {
 function boomErrorHandler(err, req, res, next) {
   if (err.isBoom) {
     const { output } = err;
-    return res.status(output.statusCode).json({
-      message: output.payload
-    });
+    res.status(output.statusCode).json(output.payload);
   }
   next(err);
 }

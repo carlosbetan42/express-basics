@@ -25,11 +25,18 @@ router.get('/:id', validatorHandler(getProductsSchema, 'params'), async (req, re
   }
 });
 
-router.post('/', validatorHandler(createProductsSchema, 'body'), async (req, res) => {
-  const body = req.body;
-  const newProduct = await service.create(body);
-  res.status(201).json(newProduct);
-});
+router.post('/',
+  validatorHandler(createProductsSchema, 'body'),
+  async (req, res, next) => {
+    try {
+      const body = req.body;
+      const newProduct = await service.create(body);
+      res.status(201).json(newProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 router.patch('/:id',
   validatorHandler(getProductsSchema, 'params'),
