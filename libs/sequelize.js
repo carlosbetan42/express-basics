@@ -16,13 +16,7 @@ if (config.isProd) {
   }
 }
 
-const sequelize = new Sequelize(config.dbUrl, {
-  dialect: 'postgres',
-  logging: true,
-  ssl: {
-    rejectUnauthorized: true
-  }
-});
+const sequelize = new Sequelize(config.dbUrl, options);
 
 setupModels(sequelize);
 
